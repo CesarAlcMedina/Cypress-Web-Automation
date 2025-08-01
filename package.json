@@ -10,6 +10,7 @@
     "url": "https://github.com/akveo/ngx-admin/issues"
   },
   "scripts": {
+    "prueba-first": "cypress run --spec cypress/e2e/firstTest.spec.js --browser chrome",
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
     "start": "run-script-os",
@@ -92,6 +93,7 @@
     "@types/node": "6.0.90",
     "codelyzer": "^5.0.1",
     "conventional-changelog-cli": "^2.1.1",
+    "cypress": "^14.5.3",
     "husky": "0.13.3",
     "npm-run-all": "4.0.2",
     "rimraf": "2.6.1",

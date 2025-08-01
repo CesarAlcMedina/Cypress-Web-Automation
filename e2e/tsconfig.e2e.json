@@ -9,6 +9,8 @@
       "jasmine",
       "jasminewd2",
       "node"
-    ]
+    ],
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
