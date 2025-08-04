@@ -82,7 +82,7 @@ describe("First test suit", () => {
 
     })             
 
-    it.only('extract text values', () => {
+    it('extract text values', () => {
         cy.visit('/')
         cy.contains('Forms').click()
         cy.contains('Form Layouts').click()
@@ -114,4 +114,85 @@ describe("First test suit", () => {
             expect(propertyValue).to.equal('test@test.com')
         })
      })
+
+    it('Get the vlue of the input', () => {
+        cy.visit("/")
+        cy.contains('Forms').click()
+        cy.contains('Form Layouts').click()
+
+        cy.contains('nb-card', 'Using the Grid').find('[type="radio"]').then(radioButton => {
+            cy.wrap(radioButton).eq(0).check({force: true}).should('be.checked')
+            cy.wrap(radioButton).eq(1).check({force: true})
+            cy.wrap(radioButton).eq(0).should('not.be.checked')
+            cy.wrap(radioButton).eq(2).should('be.disabled')
+        })
+     })
+
+    it('Check the checkboxes', () => {
+        cy.visit('/')
+        cy.contains('Modal & Overlays').click()
+        cy.contains('Toastr').click()
+
+        //cy.get('[type="checkbox"]').check({force: true}).should('be.checked')
+        //cy.get('[type="checkbox"]').uncheck({force: true})
+        cy.get('[type="checkbox"]').eq(0).click({force: true})
+        cy.get('[type="checkbox"]').eq(1).check({force: true})
+        
+
+     })
+
+    it("Date picker", () => {
+         function selectDayFromCurrent(Day){
+
+            let date = new Date()
+            date.setDate(date.getDate() + Day)
+            let futureDay = date.getDate()
+            let futureMonth = date.toLocaleDateString('en-US', {month: 'short'})
+            let futureYear = date.getFullYear()
+            let dateToAssert = `${futureMonth} ${futureDay}, ${futureYear}`
+
+                cy.get('nb-calendar-navigation').invoke('attr', 'ng-reflect-date').then(dateAttribute => {
+                    if(!dateAttribute.includes(futureMonth) || !dateAttribute.includes(futureYear)){
+                        cy.get('[data-name="chevron-right"]').click()
+                        selectDayFromCurrent(Day)
+                    }else{
+                        cy.get('.day-cell').not('.bounding-month').contains(futureDay).click()
+                    }
+                })
+            return dateToAssert     
+        }
+        cy.visit('/')
+        cy.contains('Forms').click()
+        cy.contains('Datepicker').click()
+
+       
+
+        cy.contains('nb-card', 'Common Datepicker').find('input').then(input => {
+            cy.wrap(input).click()
+            const dateToAssert = selectDayFromCurrent(80)
+            cy.wrap(input).invoke('prop', 'value').should('contain', dateToAssert)
+            cy.wrap(input).should('have.value', dateToAssert)
+            
+
+        })
+     })
+
+
+    it.only('List and dropdowns', () => {
+        cy.visit('/')
+        cy.get('nav nb-select').click()
+
+        cy.get('.options-list').contains('Dark').click()
+        cy.get('nav nb-select').should('contain', 'Dark')
+
+        cy.get('nav nb-select').click()
+        cy.get('.options-list nb-option').each(listItem=> {
+            const itemText = listItem.text().trim()
+            cy.wrap(listItem).click()
+            cy.get('nav nb-select').should('contain', itemText)
+            cy.get('nav nb-select').click()
+        })
+
+        cy.get('nb-layout-column').click()
+    })
 })
