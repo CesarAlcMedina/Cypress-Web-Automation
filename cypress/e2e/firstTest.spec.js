@@ -178,7 +178,7 @@ describe("First test suit", () => {
      })
 
 
-    it.only('List and dropdowns', () => {
+    it('List and dropdowns', () => {
         cy.visit('/')
         cy.get('nav nb-select').click()
 
@@ -194,5 +194,33 @@ describe("First test suit", () => {
         })
 
         cy.get('nb-layout-column').click()
+    })
+
+    it('Web tables', () => {
+        cy.visit('/')
+        cy.contains('Tables & Data').click()
+        cy.contains('Smart Table').click()
+
+        //Get the row by tet 
+
+        cy.get('nb-card-body').contains('tr', 'Larry').then(tableRow => {
+            cy.wrap(tableRow).find('.nb-edit').click()
+            cy.wrap(tableRow).find('[placeholder="Age"]').clear().type('40')
+            cy.wrap(tableRow).find('.nb-checkmark').click()
+            cy.wrap(tableRow).find('td').eq(6).should('contain', '40')
+
+
+        })
+
+        //Gget row by index
+
+        cy.get('thead').find('.nb-plus').click()
+        cy.get('thead').find('[ng2-st-thead-form-row=""] > :nth-child(3)').type('Cesar')/*  */
+        cy.get('thead').find('[ng2-st-thead-form-row=""] > :nth-child(4)').type('Alcantara')/*  */
+        cy.get('.nb-checkmark').click()
+
+        cy.get('tbody > :nth-child(1) > :nth-child(3)').should('contain', 'Cesar')
+        cy.get('tbody > :nth-child(1) > :nth-child(4)').should('contain', 'Alcantara')
+        
     })
 })
