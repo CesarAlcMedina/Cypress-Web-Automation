@@ -196,7 +196,7 @@ describe("First test suit", () => {
         cy.get('nb-layout-column').click()
     })
 
-    it('Web tables', () => {
+    it.only('Web tables', () => {
         cy.visit('/')
         cy.contains('Tables & Data').click()
         cy.contains('Smart Table').click()
@@ -212,7 +212,7 @@ describe("First test suit", () => {
 
         })
 
-        //Gget row by index
+        //Get row by index
 
         cy.get('thead').find('.nb-plus').click()
         cy.get('thead').find('[ng2-st-thead-form-row=""] > :nth-child(3)').type('Cesar')/*  */
@@ -221,6 +221,21 @@ describe("First test suit", () => {
 
         cy.get('tbody > :nth-child(1) > :nth-child(3)').should('contain', 'Cesar')
         cy.get('tbody > :nth-child(1) > :nth-child(4)').should('contain', 'Alcantara')
+
+        //Get each row validation
         
+        const age =[ 20, 30, 40, 200]
+        cy.wrap(age).each( age => {
+            cy.get('thead [placeholder="Age"]').clear().type(age)
+            cy.wait(1000)
+            cy.get('tbody tr').each(tableRow => {
+                if(age == 200) {
+                    cy.wrap(tableRow).should('contain', 'No data found')
+                }else{
+                    cy.wrap(tableRow).find('td').eq(6).should('contain', age)
+                }
+        })
+        })
     })
+
 })
