@@ -11,6 +11,7 @@
   },
   "scripts": {
     "prueba-first": "cypress run --spec cypress/e2e/firstTest.spec.js --browser chrome",
+    "prueba-second": "cypress run --spec cypress/e2e/testWithPageObjects.js --browser chrome",
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
     "start": "run-script-os",
