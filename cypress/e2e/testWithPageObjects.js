@@ -12,5 +12,9 @@ describe('Tes with page objects', () => {
 
         navigateTo.formsLayoutsPage()
         navigateTo.datepickerPage()
+        navigateTo.toasterPage()
+        navigateTo.webTablesPage()
+        navigateTo.tooltiPage()
+        navigateTo.dialogPage()
     })
 })
