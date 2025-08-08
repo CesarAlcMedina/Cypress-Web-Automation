@@ -10,14 +10,12 @@ function selectGroupMenuItem (groupName){
 export class NavigationPage{
 
     formsLayoutsPage(){
-        //cy.contains('Forms').click()
         selectGroupMenuItem('Form')
         cy.contains('Form Layouts').click()
 
     }
 
     datepickerPage(){
-        //cy.contains('Forms').click()
         selectGroupMenuItem('Form')
         cy.contains('Datepicker').click({force: true})
     }

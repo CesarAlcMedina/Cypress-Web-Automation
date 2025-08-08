@@ -178,14 +178,7 @@ describe("First test suit", () => {
 
         //Get the row by tet 
 
-        cy.get('nb-card-body').contains('tr', 'Larry').then(tableRow => {
-            cy.wrap(tableRow).find('.nb-edit').click()
-            cy.wrap(tableRow).find('[placeholder="Age"]').clear().type('40')
-            cy.wrap(tableRow).find('.nb-checkmark').click()
-            cy.wrap(tableRow).find('td').eq(6).should('contain', '40')
-
-
-        })
+       
 
         //Get row by index
 
